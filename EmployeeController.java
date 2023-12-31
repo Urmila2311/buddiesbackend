@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import com.cdac.myproject1.service.IEmployeeService;
 
 @RestController // consistes of @ResponseBody (so that we dont need to write evrytime)+ @Controller
 @RequestMapping("/")
+@CrossOrigin
 public class EmployeeController {
 	@Autowired
 	IEmployeeService empServ;
@@ -45,6 +47,11 @@ public class EmployeeController {
 	{
 		return empServ.updateEmpDetails(empid,emp);
 	}
-	                     
-	
+	@PostMapping("/login")                    
+	public String login(@RequestBody  Employee empbody)
+	{
+		String mail=empbody.geteEmail();
+		String password =empbody.getPassword();
+		return empServ.getRole(mail,password);
+	}
 }
